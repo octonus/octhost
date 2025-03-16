@@ -1,0 +1,7 @@
+# Pastas a serem ignoradas
+Produção/
+Templates/
+
+# Arquivos a serem ignorados
+Setup.sh
+SetupOrion.sh

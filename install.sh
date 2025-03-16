@@ -98,7 +98,7 @@ confirmar_conclusao
 
 # Clona repositório OCP
 mostrar_progresso "Baixando OCP"
-git clone https://github.com/octhost/ocp-setup.git /opt/ocp || mostrar_erro "Falha ao baixar OCP"
+git clone https://github.com/octonus/octhost.git /opt/ocp || mostrar_erro "Falha ao baixar OCP"
 confirmar_conclusao
 
 # Configura permissões
