@@ -149,6 +149,5 @@ echo -e "- Documentação: ${CIANO}https://docs.octhost.com.br${SEM_COR}"
 echo -e "- Suporte: ${CIANO}suporte@octhost.com.br${SEM_COR}"
 echo -e "- Website: ${CIANO}https://octhost.com.br${SEM_COR}"
 
-# Inicia o OCP automaticamente
-echo -e "\n${VERDE}Iniciando o OCP...${SEM_COR}"
+# Executa o setup
 /opt/ocp/setup.sh
