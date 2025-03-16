@@ -149,10 +149,6 @@ echo -e "- Documentação: ${CIANO}https://docs.octhost.com.br${SEM_COR}"
 echo -e "- Suporte: ${CIANO}suporte@octhost.com.br${SEM_COR}"
 echo -e "- Website: ${CIANO}https://octhost.com.br${SEM_COR}"
 
-# Pergunta se deseja iniciar o OCP agora
-echo -e "\n${AMARELO}Deseja iniciar o OCP agora? (s/N)${SEM_COR}"
-read -r resposta
-
-if [[ ${resposta,,} == "s" ]]; then
-    /opt/ocp/setup.sh
-fi
+# Inicia o OCP automaticamente
+echo -e "\n${VERDE}Iniciando o OCP...${SEM_COR}"
+/opt/ocp/setup.sh
