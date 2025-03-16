@@ -1,0 +1,205 @@
+{
+  "name": "Integração Perfex CRM e Chatwoot",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chatwoot",
+        "options": {}
+      },
+      "id": "5a59f6bd-1239-411f-849d-26467f828c54",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        440
+      ],
+      "webhookId": "6849a283-cb6d-4c68-87d3-4456e30e3489"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://seudominioaqui.com.br/api/leads",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authtoken",
+              "value": "seu token de api aqui"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "source",
+              "value": "1"
+            },
+            {
+              "name": "status",
+              "value": "1"
+            },
+            {
+              "name": "name",
+              "value": "={{ $node.Webhook.json.body.account.name }}"
+            },
+            {
+              "name": "phonenumber",
+              "value": "={{ $node.Limpa.json.limpanumero }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "39f7bb9c-5e30-46b1-bfd3-5bccc6ce5bea",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -80,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://seudominioaqui.com.br/api/leads/search/{{ $json.limpanumero }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authtoken",
+              "value": "seu token de api aqui"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f86baee7-8d52-4d6d-9426-6860756f895c",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        -580,
+        440
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node.Limpa.json.limpanumero }}",
+              "value2": "={{ $json.phonenumber }}"
+            }
+          ]
+        }
+      },
+      "id": "836a78f9-54ae-47c7-9cc9-a465664966fe",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        440
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "464c52af-2166-4e84-a264-891974fbc0b4",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "limpanumero",
+              "value": "={{ $json[\"body\"][\"phone_number\"].replace(/[\\D]/gi, \"\")}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "05d0c110-63a4-40ad-9de3-3d8c6bd02974",
+      "name": "Limpa",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        -820,
+        440
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Limpa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limpa": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "1e7d4af3-3610-43da-bddb-0ff56ffbe237",
+  "id": "43",
+  "meta": {
+    "instanceId": "9ed9f438163ecd84a6bf0323c59dadeaadfb205985b8c2f84ec64c3597f9453c"
+  },
+  "tags": []
+}

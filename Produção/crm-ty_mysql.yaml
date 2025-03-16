@@ -1,0 +1,43 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: percona/percona-server:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=Mfcd62!!Mfcd62!!
+      - TZ=America/Sao_Paulo
+    networks:
+      - network_public
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+          #- node.hostname == worker1
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+    command:
+      [
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_general_ci",
+        "--sql-mode=",
+        "--default-authentication-plugin=mysql_native_password",
+        "--max-allowed-packet=512MB",
+        "--expire_logs_days=7",
+        "--max_binlog_size=100M"
+      ]
+
+volumes:
+  mysql_data:
+    external: true
+    name: mysql_data
+
+networks:
+  network_public:
+    external: true
+    name: network_public

@@ -1,0 +1,156 @@
+Instalação Docker
+
+sudo apt-get update ; apt-get install -y apparmor-utils
+
+hostnamectl set-hostname manager1
+
+Altera localhost para
+
+nano /etc/hosts
+
+127.0.0.1 manager1
+
+192.168.1.31    traefik001
+192.168.1.32    traefik002
+192.168.1.33    traefik003
+
+curl -fsSL https://get.docker.com | bash
+
+Ubuntu 22.04
+sudo apt-get install docker-ce=5:25.0.3-1~ubuntu.22.04~jammy docker-ce-cli=5:25.0.3-1~ubuntu.22.04~jammy containerd.io
+
+Ubuntu 24.04
+# 1. Atualize o índice de pacotes e instale pré-requisitos
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl gnupg software-properties-common
+
+# 2. Adicione a chave GPG oficial do Docker
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+# 3. Configure o repositório estável do Docker
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu noble stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# 4. Atualize o índice de pacotes novamente
+sudo apt-get update
+
+# 5. Instale o Docker Engine
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+sudo docker run hello-world
+
+sudo usermod -aG docker $USER
+newgrp docker
+
+
+
+docker swarm init
+
+----
+Digital Ocean ou AWS - docker swarm init --advertise-addr 52.67.124.167
+----
+
+docker network create --driver=overlay network_public
+
+nano traefik.yaml
+
+docker stack deploy --prune --resolve-image always -c traefik.yaml traefik
+
+
+Instalação portainer
+
+nano portainer.yaml
+
+docker stack deploy --prune --resolve-image always -c portainer.yaml portainer
+
+
+
+Instalação postgree
+sobe a stack
+
+instalação rabit
+sobe a stack
+
+
+Criar banco de dados postgree
+
+psql -U postgres
+
+create database n8ndb; create database chatwoot;
+
+Chatwoot
+
+entrar no console do app com command /bin/ash e executa
+
+bundle exec rails db:chatwoot_prepare
+
+
+Alterar Logo Chatwoot Docker
+
+entrar no console do conteiner
+
+psql -U postgres
+
+\l
+
+\c chatwoot_nestor;
+
+update installation_configs set locked = false;
+
+\q
+
+
+
+Cia banco de dados mysql
+
+mysql -u root -p
+
+Mfcd62!!Mfcd62!!
+
+botar a senha do mysql
+
+CREATE DATABASE wordpress;
+
+
+-------------------------------
+
+Tema Criador de Empresa:
+
+Nome Usuario Administrador: RaphaelPopiolek
+Nome da Empresa: AstraOnline
+Email: machineteste24@gmail.com
+Senha: Mfcd62!!
+
+-----------
+
+Personalizar o chatwoot
+
+No banco de dados PostgreSQL
+sudo -u postgres psql
+\c chatwoot_production
+update installation_configs set locked = false;
+\q
+
+
+Gerador de Favicon: https://www.favicon-generator.org/
+
+
+Gerador de Key https://codebeautify.org/generate-random-hexadecimal-numbers
+
+
+Credencias Sheet: https://videos-orion.notion.site/Instala-o-do-Typebot-Storage-Google-Sheet-Giphy-6e6d6e6724d54262a4b5f0a5a18eb601
+
+Recuperar Codigo
+
+docker swarm join-token worker
+
+------------
+
+Destruir todos os conteineres:
+
+docker rm -f $(docker ps -aq)
+
+Apagar conteineres vazios
+
+docker rm $(docker ps -aq -f status=exited)
+
+-------------

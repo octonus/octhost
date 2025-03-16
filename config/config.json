@@ -1,0 +1,174 @@
+{
+    "versao": "3.0.0",
+    "empresa": {
+        "nome": "Octonus Cloud Platform",
+        "site": "octhost.com.br",
+        "email": "suporte@octhost.com.br"
+    },
+    "sistema": {
+        "requisitos": {
+            "cpu_minimo": 2,
+            "ram_minimo": 2048,
+            "disco_minimo": 10240
+        },
+        "diretorios": {
+            "base": "/etc/ocp",
+            "logs": "/var/log/ocp",
+            "backup": "/var/backups/ocp",
+            "temp": "/tmp/ocp",
+            "ssl": "/etc/ocp/ssl",
+            "docker": "/etc/ocp/docker",
+            "apps": "/etc/ocp/apps"
+        }
+    },
+    "docker": {
+        "redes": {
+            "proxy": {
+                "nome": "proxy",
+                "driver": "bridge",
+                "ipam": {
+                    "subnet": "172.18.0.0/16"
+                }
+            }
+        },
+        "volumes": {
+            "dir_padrao": "/var/lib/docker-volumes"
+        },
+        "daemon": {
+            "log-driver": "json-file",
+            "log-opts": {
+                "max-size": "100m",
+                "max-file": "3"
+            },
+            "default-ulimits": {
+                "nofile": {
+                    "Name": "nofile",
+                    "Hard": 64000,
+                    "Soft": 64000
+                }
+            },
+            "live-restore": true,
+            "max-concurrent-downloads": 10,
+            "max-concurrent-uploads": 10,
+            "storage-driver": "overlay2",
+            "metrics-addr": "127.0.0.1:9323",
+            "experimental": false
+        }
+    },
+    "apps": {
+        "traefik": {
+            "versao": "v2.10",
+            "porta_http": 80,
+            "porta_https": 443,
+            "dashboard": {
+                "ativo": true,
+                "porta": 8080,
+                "auth": true
+            }
+        },
+        "portainer": {
+            "versao": "latest",
+            "porta": 9000,
+            "ssl": true
+        },
+        "monitoramento": {
+            "prometheus": {
+                "versao": "latest",
+                "porta": 9090,
+                "retencao": "15d"
+            },
+            "grafana": {
+                "versao": "latest",
+                "porta": 3000,
+                "plugins": [
+                    "grafana-clock-panel",
+                    "grafana-piechart-panel"
+                ]
+            }
+        },
+        "banco_dados": {
+            "postgresql": {
+                "versao": "15",
+                "porta": 5432,
+                "max_connections": 100
+            },
+            "mysql": {
+                "versao": "8.0",
+                "porta": 3306,
+                "max_connections": 100
+            },
+            "redis": {
+                "versao": "7",
+                "porta": 6379,
+                "max_memory": "256mb"
+            }
+        }
+    },
+    "seguranca": {
+        "firewall": {
+            "portas_padrao": [
+                22,
+                80,
+                443
+            ],
+            "politica_padrao": {
+                "entrada": "deny",
+                "saida": "allow"
+            }
+        },
+        "ssl": {
+            "provedor": "letsencrypt",
+            "email_notificacao": "suporte@octhost.com.br",
+            "renovacao_automatica": true,
+            "dias_antes_renovacao": 30
+        },
+        "backup": {
+            "agendamento": {
+                "diario": {
+                    "ativo": true,
+                    "hora": "02:00",
+                    "retencao": 7
+                },
+                "semanal": {
+                    "ativo": true,
+                    "dia": "domingo",
+                    "hora": "03:00",
+                    "retencao": 4
+                },
+                "mensal": {
+                    "ativo": true,
+                    "dia": "1",
+                    "hora": "04:00",
+                    "retencao": 3
+                }
+            },
+            "notificacoes": {
+                "email": {
+                    "ativo": true,
+                    "destinatarios": [
+                        "suporte@octhost.com.br"
+                    ]
+                }
+            },
+            "criptografia": {
+                "ativo": true,
+                "algoritmo": "AES-256-CBC"
+            }
+        }
+    },
+    "logs": {
+        "nivel": "INFO",
+        "rotacao": {
+            "tamanho_maximo": "100M",
+            "arquivos_maximos": 5,
+            "compressao": true
+        },
+        "formato": "[%datetime%] [%level_name%] %message%"
+    },
+    "atualizacao": {
+        "verificacao_automatica": true,
+        "intervalo_dias": 7,
+        "canal": "stable",
+        "repositorio": "https://github.com/octhost/ocp-setup"
+    }
+}
