@@ -5,38 +5,6 @@
 # Website: octhost.com.br
 # Suporte: suporte@octhost.com.br
 
-mostrar_menu_principal() {
-    while true; do
-        clear
-        mostrar_banner
-        
-        echo -e "${BRANCO}Menu Principal${SEM_COR}"
-        echo "1) Configuração do Sistema"
-        echo "2) Gerenciamento Docker" 
-        echo "3) Instalação de Aplicações"
-        echo "4) Configuração de Segurança"
-        echo "5) Backup e Restauração"
-        echo "6) Status do Sistema"
-        echo "7) Sair"
-        
-        read -p "Selecione uma opção: " opcao
-        
-        case $opcao in
-            1) menu_configuracao_sistema ;;
-            2) menu_docker ;;
-            3) menu_instalacao_apps ;;
-            4) menu_seguranca ;;
-            5) menu_backup ;;
-            6) mostrar_status_sistema ;;
-            7) 
-                echo -e "${VERDE}Encerrando o script. Obrigado por usar OCP!${SEM_COR}"
-                exit 0 
-                ;;
-            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}" ;;
-        esac
-    done
-}
-
 menu_configuracao_sistema() {
     while true; do
         clear
@@ -47,8 +15,8 @@ menu_configuracao_sistema() {
         echo "4) Configurar Rede"
         echo "5) Configurar Firewall"
         echo "6) Voltar ao Menu Principal"
-        
-        read -p "Selecione uma opção: " opcao
+        echo
+        read -p "Digite o número da opção desejada: " opcao
         
         case $opcao in
             1) atualizar_sistema ;;
@@ -56,8 +24,8 @@ menu_configuracao_sistema() {
             3) configurar_hostname ;;
             4) configurar_rede ;;
             5) configurar_firewall ;;
-            6) break ;;
-            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}" ;;
+            6) return ;;
+            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}"; sleep 2 ;;
         esac
     done
 }
@@ -73,8 +41,8 @@ menu_docker() {
         echo "5) Gerenciar Volumes"
         echo "6) Atualizar Docker"
         echo "7) Voltar ao Menu Principal"
-        
-        read -p "Selecione uma opção: " opcao
+        echo
+        read -p "Digite o número da opção desejada: " opcao
         
         case $opcao in
             1) instalar_docker ;;
@@ -83,8 +51,8 @@ menu_docker() {
             4) gerenciar_redes_docker ;;
             5) gerenciar_volumes_docker ;;
             6) atualizar_docker ;;
-            7) break ;;
-            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}" ;;
+            7) return ;;
+            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}"; sleep 2 ;;
         esac
     done
 }
@@ -101,8 +69,8 @@ menu_instalacao_apps() {
         echo "6) Instalar N8N"
         echo "7) Instalar TypeBot"
         echo "8) Voltar ao Menu Principal"
-        
-        read -p "Selecione uma opção: " opcao
+        echo
+        read -p "Digite o número da opção desejada: " opcao
         
         case $opcao in
             1) instalar_traefik ;;
@@ -112,8 +80,8 @@ menu_instalacao_apps() {
             5) instalar_chatwoot ;;
             6) instalar_n8n ;;
             7) instalar_typebot ;;
-            8) break ;;
-            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}" ;;
+            8) return ;;
+            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}"; sleep 2 ;;
         esac
     done
 }
@@ -127,16 +95,16 @@ menu_banco_dados() {
         echo "3) Instalar Redis"
         echo "4) Instalar MongoDB"
         echo "5) Voltar ao Menu de Instalação"
-        
-        read -p "Selecione uma opção: " opcao
+        echo
+        read -p "Digite o número da opção desejada: " opcao
         
         case $opcao in
             1) instalar_postgresql ;;
             2) instalar_mysql ;;
             3) instalar_redis ;;
             4) instalar_mongodb ;;
-            5) break ;;
-            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}" ;;
+            5) return ;;
+            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}"; sleep 2 ;;
         esac
     done
 }
@@ -151,8 +119,8 @@ menu_seguranca() {
         echo "4) Auditoria de Segurança"
         echo "5) Gerenciar Senhas"
         echo "6) Voltar ao Menu Principal"
-        
-        read -p "Selecione uma opção: " opcao
+        echo
+        read -p "Digite o número da opção desejada: " opcao
         
         case $opcao in
             1) configurar_firewall ;;
@@ -160,8 +128,8 @@ menu_seguranca() {
             3) configurar_backup_automatico ;;
             4) auditoria_seguranca ;;
             5) gerenciar_senhas ;;
-            6) break ;;
-            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}" ;;
+            6) return ;;
+            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}"; sleep 2 ;;
         esac
     done
 }
@@ -176,8 +144,8 @@ menu_backup() {
         echo "4) Listar Backups"
         echo "5) Limpar Backups Antigos"
         echo "6) Voltar ao Menu Principal"
-        
-        read -p "Selecione uma opção: " opcao
+        echo
+        read -p "Digite o número da opção desejada: " opcao
         
         case $opcao in
             1) criar_backup ;;
@@ -185,8 +153,8 @@ menu_backup() {
             3) configurar_agendamento_backup ;;
             4) listar_backups ;;
             5) limpar_backups_antigos ;;
-            6) break ;;
-            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}" ;;
+            6) return ;;
+            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}"; sleep 2 ;;
         esac
     done
 }
@@ -203,33 +171,4 @@ mostrar_status_sistema() {
     echo -e "${CIANO}----------------------------------------${SEM_COR}"
     
     read -p "Pressione Enter para continuar..."
-}
-
-# Função para mostrar progresso
-mostrar_progresso() {
-    local descricao=$1
-    local duracao=$2
-    local progresso=0
-    
-    echo -ne "${CIANO}$descricao: [${SEM_COR}"
-    while [ $progresso -lt 100 ]; do
-        echo -ne "${VERDE}#${SEM_COR}"
-        progresso=$((progresso + 2))
-        sleep $(echo "scale=4; $duracao/50" | bc)
-    done
-    echo -e "${CIANO}] Concluído!${SEM_COR}"
-}
-
-# Função para confirmar ação
-confirmar_acao() {
-    local mensagem=$1
-    local confirmacao
-    
-    echo -e "${AMARELO}$mensagem${SEM_COR}"
-    read -p "Deseja continuar? (s/N): " confirmacao
-    
-    if [[ ${confirmacao,,} != "s" ]]; then
-        return 1
-    fi
-    return 0
 }

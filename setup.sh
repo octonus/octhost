@@ -187,10 +187,38 @@ main() {
     echo -e "${CIANO}Verificando atualizações...${SEM_COR}"
     verificar_atualizacoes
     
-    # Inicia o menu principal
-    mostrar_menu_principal
-    
-    limpeza
+    # Configura trap para limpeza ao sair
+    trap limpeza EXIT
+
+    # Inicia o menu principal em um loop infinito
+    while true; do
+        clear
+        mostrar_banner
+        echo -e "${BRANCO}Menu Principal${SEM_COR}"
+        echo "1) Configuração do Sistema"
+        echo "2) Gerenciamento Docker"
+        echo "3) Instalação de Aplicações"
+        echo "4) Configuração de Segurança"
+        echo "5) Backup e Restauração"
+        echo "6) Status do Sistema"
+        echo "7) Sair"
+        echo
+        read -p "Digite o número da opção desejada: " opcao
+        
+        case $opcao in
+            1) menu_configuracao_sistema ;;
+            2) menu_docker ;;
+            3) menu_instalacao_apps ;;
+            4) menu_seguranca ;;
+            5) menu_backup ;;
+            6) mostrar_status_sistema ;;
+            7) 
+                echo -e "${VERDE}Encerrando o script. Obrigado por usar OCP!${SEM_COR}"
+                exit 0 
+                ;;
+            *) echo -e "${VERMELHO}Opção inválida${SEM_COR}"; sleep 2 ;;
+        esac
+    done
 }
 
 # Executa função principal
