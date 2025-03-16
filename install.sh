@@ -96,9 +96,35 @@ mkdir -p /var/log/ocp
 mkdir -p /var/backups/ocp
 confirmar_conclusao
 
-# Clona repositório OCP
+# Função para download seguro
+download_arquivo() {
+    local url=$1
+    local destino=$2
+    wget -q "$url" -O "$destino" || mostrar_erro "Falha ao baixar $destino"
+}
+
+# Download dos arquivos necessários
 mostrar_progresso "Baixando OCP"
-git clone https://github.com/octonus/octhost.git /opt/ocp || mostrar_erro "Falha ao baixar OCP"
+mkdir -p /opt/ocp
+mkdir -p /opt/ocp/modules
+mkdir -p /opt/ocp/config
+
+# Download dos arquivos principais
+download_arquivo "https://raw.githubusercontent.com/octonus/octhost/main/setup.sh" "/opt/ocp/setup.sh"
+download_arquivo "https://raw.githubusercontent.com/octonus/octhost/main/check.sh" "/opt/ocp/check.sh"
+download_arquivo "https://raw.githubusercontent.com/octonus/octhost/main/uninstall.sh" "/opt/ocp/uninstall.sh"
+
+# Download dos módulos
+download_arquivo "https://raw.githubusercontent.com/octonus/octhost/main/modules/menu.sh" "/opt/ocp/modules/menu.sh"
+download_arquivo "https://raw.githubusercontent.com/octonus/octhost/main/modules/utils.sh" "/opt/ocp/modules/utils.sh"
+download_arquivo "https://raw.githubusercontent.com/octonus/octhost/main/modules/docker.sh" "/opt/ocp/modules/docker.sh"
+download_arquivo "https://raw.githubusercontent.com/octonus/octhost/main/modules/apps.sh" "/opt/ocp/modules/apps.sh"
+download_arquivo "https://raw.githubusercontent.com/octonus/octhost/main/modules/security.sh" "/opt/ocp/modules/security.sh"
+download_arquivo "https://raw.githubusercontent.com/octonus/octhost/main/modules/backup.sh" "/opt/ocp/modules/backup.sh"
+
+# Download da configuração
+download_arquivo "https://raw.githubusercontent.com/octonus/octhost/main/config/config.json" "/opt/ocp/config/config.json"
+
 confirmar_conclusao
 
 # Configura permissões
