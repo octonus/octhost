@@ -17,7 +17,7 @@ BRANCO='\033[1;37m'
 SEM_COR='\033[0m'
 
 # Variáveis globais
-DIR_TRABALHO=$(pwd)
+DIR_TRABALHO="/opt/ocp"
 ARQUIVO_LOG="${DIR_TRABALHO}/setup.log"
 DIR_CONFIG="${DIR_TRABALHO}/config"
 DIR_TEMP="${DIR_TRABALHO}/temp"
