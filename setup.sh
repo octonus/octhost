@@ -190,6 +190,13 @@ main() {
     # Configura trap para limpeza ao sair
     trap limpeza EXIT
 
+    # Função para ler input de forma segura
+    ler_opcao() {
+        local input
+        read -r input
+        echo "$input"
+    }
+
     # Inicia o menu principal em um loop infinito
     while true; do
         clear
@@ -203,7 +210,8 @@ main() {
         echo "6) Status do Sistema"
         echo "7) Sair"
         echo
-        read -p "Digite o número da opção desejada: " opcao
+        echo -n "Digite o número da opção desejada: "
+        opcao=$(ler_opcao)
         
         case $opcao in
             1) menu_configuracao_sistema ;;

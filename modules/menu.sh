@@ -16,7 +16,8 @@ menu_configuracao_sistema() {
         echo "5) Configurar Firewall"
         echo "6) Voltar ao Menu Principal"
         echo
-        read -p "Digite o número da opção desejada: " opcao
+        echo -n "Digite o número da opção desejada: "
+        opcao=$(ler_opcao)
         
         case $opcao in
             1) atualizar_sistema ;;
@@ -42,7 +43,8 @@ menu_docker() {
         echo "6) Atualizar Docker"
         echo "7) Voltar ao Menu Principal"
         echo
-        read -p "Digite o número da opção desejada: " opcao
+        echo -n "Digite o número da opção desejada: "
+        opcao=$(ler_opcao)
         
         case $opcao in
             1) instalar_docker ;;
@@ -70,7 +72,8 @@ menu_instalacao_apps() {
         echo "7) Instalar TypeBot"
         echo "8) Voltar ao Menu Principal"
         echo
-        read -p "Digite o número da opção desejada: " opcao
+        echo -n "Digite o número da opção desejada: "
+        opcao=$(ler_opcao)
         
         case $opcao in
             1) instalar_traefik ;;
@@ -96,7 +99,8 @@ menu_banco_dados() {
         echo "4) Instalar MongoDB"
         echo "5) Voltar ao Menu de Instalação"
         echo
-        read -p "Digite o número da opção desejada: " opcao
+        echo -n "Digite o número da opção desejada: "
+        opcao=$(ler_opcao)
         
         case $opcao in
             1) instalar_postgresql ;;
@@ -120,7 +124,8 @@ menu_seguranca() {
         echo "5) Gerenciar Senhas"
         echo "6) Voltar ao Menu Principal"
         echo
-        read -p "Digite o número da opção desejada: " opcao
+        echo -n "Digite o número da opção desejada: "
+        opcao=$(ler_opcao)
         
         case $opcao in
             1) configurar_firewall ;;
@@ -145,7 +150,8 @@ menu_backup() {
         echo "5) Limpar Backups Antigos"
         echo "6) Voltar ao Menu Principal"
         echo
-        read -p "Digite o número da opção desejada: " opcao
+        echo -n "Digite o número da opção desejada: "
+        opcao=$(ler_opcao)
         
         case $opcao in
             1) criar_backup ;;
@@ -170,5 +176,6 @@ mostrar_status_sistema() {
     echo -e "Contêineres Ativos: $(docker ps -q | wc -l 2>/dev/null || echo 'Docker não instalado')"
     echo -e "${CIANO}----------------------------------------${SEM_COR}"
     
-    read -p "Pressione Enter para continuar..."
+    echo -n "Pressione Enter para continuar..."
+    ler_opcao
 }
