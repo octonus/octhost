@@ -190,28 +190,46 @@ main() {
     # Configura trap para limpeza ao sair
     trap limpeza EXIT
 
-    # Função para ler input de forma segura
-    ler_opcao() {
-        local input
-        read -r input
-        echo "$input"
+    # Função para exibir menu e obter seleção
+    exibir_menu() {
+        local titulo=$1
+        shift
+        local opcoes=("$@")
+        local escolha
+        
+        while true; do
+            clear
+            [ "$titulo" = "Menu Principal" ] && mostrar_banner
+            echo -e "${BRANCO}${titulo}${SEM_COR}"
+            local i=1
+            for opcao in "${opcoes[@]}"; do
+                echo "$i) $opcao"
+                ((i++))
+            done
+            echo
+            echo -n "Digite o número da opção desejada: "
+            read -r escolha
+            
+            if [[ "$escolha" =~ ^[0-9]+$ ]] && [ "$escolha" -gt 0 ] && [ "$escolha" -le "${#opcoes[@]}" ]; then
+                return "$escolha"
+            else
+                echo -e "${VERMELHO}Opção inválida${SEM_COR}"
+                sleep 2
+            fi
+        done
     }
 
     # Inicia o menu principal em um loop infinito
     while true; do
-        clear
-        mostrar_banner
-        echo -e "${BRANCO}Menu Principal${SEM_COR}"
-        echo "1) Configuração do Sistema"
-        echo "2) Gerenciamento Docker"
-        echo "3) Instalação de Aplicações"
-        echo "4) Configuração de Segurança"
-        echo "5) Backup e Restauração"
-        echo "6) Status do Sistema"
-        echo "7) Sair"
-        echo
-        echo -n "Digite o número da opção desejada: "
-        opcao=$(ler_opcao)
+        exibir_menu "Menu Principal" \
+            "Configuração do Sistema" \
+            "Gerenciamento Docker" \
+            "Instalação de Aplicações" \
+            "Configuração de Segurança" \
+            "Backup e Restauração" \
+            "Status do Sistema" \
+            "Sair"
+        opcao=$?
         
         case $opcao in
             1) menu_configuracao_sistema ;;
